@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'android-apt'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
+    defaultConfig {
+        applicationId "com.example.camera"
+        minSdkVersion 17
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    ext.apacheCommonsVersion = '2.4'
+    ext.daggerVersion = '1.2.2'
+    ext.reactiveLocationVersion = '0.8@aar'
+    ext.timberVersion = '3.1.0'
+    ext.jodaTimeVersion = '2.9.0'
+    ext.okHttpVersion = '3.2.0'
+    ext.retrofitVersion = '2.0.0-beta4'
+    ext.rxAndroidVersion = '1.2.1'
+    ext.rxJavaVersion = '1.1.9'
+    ext.awsVersion = '2.2.20'
+    ext.gsonVersion = '2.5'
+    ext.playServicesVersion = '8.3.0'
+    ext.appCompatVersion = '23.2.1'
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.jakewharton.timber:timber:4.3.1'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    compile "com.jakewharton.timber:timber:$timberVersion"
+    compile "net.danlew:android.joda:$jodaTimeVersion"
+    compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    compile "com.squareup.okhttp3:okhttp-urlconnection:$okHttpVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
+    compile "io.reactivex:rxandroid:$rxAndroidVersion"
+    compile "io.reactivex:rxjava:$rxJavaVersion"
+
+    testCompile 'junit:junit:4.12'
+}
