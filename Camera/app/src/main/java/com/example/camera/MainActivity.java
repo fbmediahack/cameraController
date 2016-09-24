@@ -2,12 +2,11 @@ package com.example.camera;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ImageView;
 
 import com.example.camera.Network.RestClient;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,36 +52,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.up)
-    public void onUp(){
+    public void onUp() {
         onCmd("ptzMoveUp");
     }
 
     @OnClick(R.id.down)
-    public void onDown(){
+    public void onDown() {
         onCmd("ptzMoveDown");
     }
 
     @OnClick(R.id.left)
-    public void onLeft(){
+    public void onLeft() {
         onCmd("ptzMoveLeft");
     }
 
     @OnClick(R.id.right)
-    public void onRight(){
+    public void onRight() {
         onCmd("ptzMoveRight");
     }
+
     @OnClick(R.id.stop)
-    public void onStop(){
+    public void onStop() {
         onCmd("ptzStopRun");
     }
 
-    private void onCmd(String cmd){
+    private void onCmd(String cmd) {
         RestClient.getRequestService(
                 RestClient.callUrl("http://192.168.0.136:88/cgi-bin/"))
-                .request("user5","media5", cmd)
+                .request("user5", "media5", cmd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onNext, this::onError, this::onCompleted);
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
+            onCmd("ptzMoveDown");
+        } else if ((keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+            onCmd("ptzMoveUp");
+        }
+
+        return true;
     }
 }
